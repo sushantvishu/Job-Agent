@@ -1,15 +1,17 @@
 {
-  "_comment": "Copy this file to email_accounts.json and fill in your real addresses. Set app-passwords in .env.",
+  "_comment": "Copy this file to email_accounts.json. For Gmail or Google Workspace accounts, generate a 16-character App Password at https://myaccount.google.com/apppasswords and reference it via environment variable.",
   "accounts": [
     {
+      "name": "gmail_workspace",
       "label": "primary",
       "provider": "gmail",
-      "address": "your_primary@gmail.com",
+      "address": "your_workspace_email@yourdomain.com",
       "app_password_env": "JOB_AGENT_GMAIL_PRIMARY_APP_PASSWORD",
       "imap_host": "imap.gmail.com",
       "imap_port": 993
     },
     {
+      "name": "gmail_secondary",
       "label": "secondary",
       "provider": "gmail",
       "address": "your_secondary@gmail.com",

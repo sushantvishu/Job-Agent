@@ -153,7 +153,14 @@ Open `.env` in your editor and configure:
 - **Candidate Details**: `CANDIDATE_NAME`, `CANDIDATE_EMAIL`, `CANDIDATE_PHONE`, `TARGET_ROLE`
 - **Browser Settings**: `BROWSER_TYPE=chrome`, `HEADLESS=false` (to watch the browser) or `true` (background)
 - **Local AI (Ollama)**: `AI_API_STYLE=ollama`, `LOCAL_AI_MODEL=qwen2.5:7b-instruct`
-- **Email Outreach (Optional)**: `EMAIL_USER`, `EMAIL_PASSWORD` (Gmail App Password)
+- **Email Outreach & Monitoring (Gmail / Google Workspace)**:
+  > [!IMPORTANT]
+  > **Gmail / Google Workspace App Password Required**:  
+  > Google does NOT allow standard master login passwords for SMTP/IMAP automation.  
+  > 1. Enable **2-Step Verification** in your [Google Security Settings](https://myaccount.google.com/security).  
+  > 2. Go to **[Google App Passwords](https://myaccount.google.com/apppasswords)**.  
+  > 3. Generate a new 16-character App Password (name it e.g. `Job Agent`).  
+  > 4. Set `EMAIL_USER=your_workspace_email@yourdomain.com` and `EMAIL_PASSWORD=your_16_char_app_password` in `.env`.
 
 ### 5. Initialize the Self-Healing System
 Run the system initialization check:
@@ -210,6 +217,10 @@ The **`apply-posts`** pipeline:
 3. Uses local AI to generate a hyper-targeted, professional cover email referencing the recruiter's exact post.
 4. Attaches your tailored PDF resume.
 5. In dry-run mode (default), generates previews for your inspection. With `--live`, delivers the email via SMTP with rate-limiting and daily quota protection.
+
+> [!TIP]
+> **Gmail & Google Workspace SMTP Setup**:  
+> If using Gmail or a custom Google Workspace domain, ensure **2-Step Verification** is enabled on your account, then generate a dedicated 16-character **[App Password](https://myaccount.google.com/apppasswords)**. Standard Google account login passwords will be rejected by Google's SMTP/IMAP servers.
 
 ---
 
