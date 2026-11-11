@@ -4,6 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![Local AI](https://img.shields.io/badge/Local%20AI-Ollama-blueviolet.svg)](https://ollama.com/)
 [![Selenium WebDriver](https://img.shields.io/badge/Browser%20Automation-Selenium-green.svg)](https://www.selenium.dev/)
 [![Java Bridge](https://img.shields.io/badge/Java-Subprocess%20Bridge-orange.svg)](https://openjdk.org/)
 [![SQLite Self--Healing](https://img.shields.io/badge/Database-SQLite%20Self--Healing-lightblue.svg)](https://www.sqlite.org/)
@@ -116,6 +117,32 @@ python src/main.py run --input jobs/urls.example.txt
 ```bash
 python src/main.py stats
 ```
+
+---
+
+## 🧠 Local AI & LLM Integration (Ollama)
+
+The framework includes native integration with **[Ollama](https://ollama.com/)** for 100% offline, privacy-first AI intelligence with **zero API costs**:
+
+- **Automated Form & Questionnaire Answering**: Dynamically responds to complex screening questions (*"Why are you a good fit for this role?"*, *"Describe your experience with X"*) based on your loaded candidate profile.
+- **Personalized Cover Emails**: Generates tailored outreach and cover emails specific to the job description and candidate strengths.
+- **On-Demand Lifecycle & RAM Conservation**: Automatically starts the local Ollama background server when needed, and immediately unloads models (`keep_alive: 0`) and releases GPU/system RAM once execution concludes.
+- **Multi-Model Fallbacks**: Pre-configured for `qwen2.5:7b-instruct` with seamless fallback to lightweight models (`llama3.2:3b`, `qwen2.5:3b`) or cloud endpoints.
+
+### Setting Up Ollama
+1. Download and install Ollama from [ollama.com](https://ollama.com/).
+2. Pull the recommended default model:
+   ```bash
+   ollama pull qwen2.5:7b-instruct
+   ```
+3. Set your preferences in `.env`:
+   ```env
+   AI_API_STYLE=ollama
+   LOCAL_AI_BASE_URL=http://127.0.0.1:11434
+   LOCAL_AI_MODEL=qwen2.5:7b-instruct
+   LOCAL_AI_FALLBACK_MODELS=llama3.2:3b,qwen3:1.7b
+   ```
+*(Note: Cloud LLMs like OpenAI, Gemini, or Groq are also supported by setting `AI_API_STYLE=openai` and providing your API key).*
 
 ---
 
