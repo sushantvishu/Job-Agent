@@ -16,7 +16,29 @@
 
 **Job Agent** is a production-grade, open-source automation suite engineered to transform job searching from manual repetitive labor into an intelligent, high-velocity autonomous pipeline.
 
-It navigates job portals, scores opportunities, automatically completes complex Applicant Tracking System (ATS) forms, scans recruiter hiring posts for direct cold-email outreach, dynamically compiles tailored resumes, intercepts 2FA/OTPs, and monitors your inbox for inbound interview invitations — all orchestrated locally on your machine with **zero API costs** and **strict privacy**.
+Currently **pre-configured and battle-tested for LinkedIn and Naukri.com**, the framework navigates job listings, scores opportunities, automatically completes complex Applicant Tracking System (ATS) forms, scans recruiter hiring posts for direct cold-email outreach, dynamically compiles tailored resumes, intercepts 2FA/OTPs, and monitors your inbox for inbound interview invitations — all orchestrated locally on your machine with **zero API costs** and **strict privacy**.
+
+Support for additional platforms like **Instahyre**, **Foundit**, **Shine**, and **Indeed** is currently on the active roadmap and welcoming community contributions.
+
+---
+
+## 🌐 Supported Job Portals & Roadmap
+
+> [!NOTE]
+> **Active Focus**: Job Agent is currently battle-tested and production-ready for **LinkedIn** and **Naukri.com**. Additional platforms are in active development or planned for upcoming releases.
+
+| Platform / Portal | Status | Capabilities Supported |
+| :--- | :---: | :--- |
+| **LinkedIn** | 🟢 **Active** | Job Search, Easy Apply, Recruiter Post Scanner, Automated Cold Email Outreach |
+| **Naukri.com** | 🟢 **Active** | Keyword Search, One-Click Apply, Company Portal Redirects, 2FA/OTP Interception |
+| **Direct ATS Portals** | 🟢 **Active** | Greenhouse, Lever, Workday, SmartRecruiters, BambooHR, Ashby, Taleo |
+| **Instahyre** | 🟡 *In Staging* | Search and opportunity collector; full application adapter in progress |
+| **Foundit (Monster)** | 🟡 *In Staging* | Basic listing crawler built; end-to-end apply pipeline in development |
+| **Shine.com** | ⚪ *Planned* | Scraper and application module on upcoming roadmap |
+| **Indeed** | ⚪ *Planned* | Job feed parser and application handler planned |
+| **Wellfound (AngelList)** | 🟡 *In Staging* | Startup job collector in development |
+
+*Community contributions for new scrapers and portal adapters are warmly welcomed! See [CONTRIBUTING.md](CONTRIBUTING.md) to build an adapter for your favorite job site.*
 
 ---
 
@@ -24,7 +46,7 @@ It navigates job portals, scores opportunities, automatically completes complex 
 
 | Capability | Module | Description |
 | :--- | :--- | :--- |
-| **Multi-Platform Scraper** | `app/scrapers/` | Scrapes jobs from **LinkedIn**, **Naukri**, **Foundit (Monster)**, **Instahyre**, **Wellfound**, and direct **Company ATS** portals. |
+| **Multi-Platform Scraper** | `app/scrapers/` | Pre-configured for **LinkedIn** & **Naukri**; staging adapters for **Instahyre**, **Foundit**, **Shine**, and **Company ATS** portals. |
 | **Direct ATS Form Filler** | `app/form_filler.py` | Automatically fills multi-step application forms (**Greenhouse, Lever, Workday, SmartRecruiters, BambooHR, Ashby, Taleo**). |
 | **LinkedIn Recruiter Outreach** | `linkedin_post_applier.py` | Scans LinkedIn feed posts where recruiters ask for resumes, generates bespoke cover emails via AI, and emails them with your resume. |
 | **Local AI Answering (Ollama)** | `app/ollama_client.py` | Dynamically answers open-ended screening questions (*"Why are you a fit?"*, *"Years of experience with X"*) with **zero API costs**. |

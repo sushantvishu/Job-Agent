@@ -71,6 +71,21 @@ Thank you for your interest in contributing to **Job Agent**! We welcome communi
 
 ---
 
+## 🌐 Adding New Job Portal Scrapers (Roadmap)
+
+Job Agent is currently battle-tested on **LinkedIn** and **Naukri.com**. One of our primary open-source goals is expanding support to additional portals like **Instahyre**, **Foundit (Monster)**, **Shine.com**, **Indeed**, and **Wellfound**.
+
+If you'd like to implement or improve a portal adapter:
+1. Create or extend the portal scraper in `app/scrapers/<portal_name>.py` adhering to `app/scrapers/base.py`.
+2. Implement methods for:
+   - `build_search_url(keywords, locations, experience)`
+   - `extract_job_listings(page)`
+   - `extract_job_details(page, url)`
+3. Register the new portal in `app/job_collector.py` and add seed test URLs in `jobs/urls.example.txt`.
+4. Ensure anti-bot delay jitter and pagination bounds are respected.
+
+---
+
 ## 🛠 Coding Guidelines
 
 - **Privacy & Safety First**: Never hardcode personal data, credentials, or cookies. All configurations must be sourced dynamically via `os.getenv` or `.env`.
