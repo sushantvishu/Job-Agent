@@ -127,6 +127,132 @@ def stats() -> None:
     console.print(table)
 
 
+@app.command(name="dashboard")
+@app.command(name="ui")
+def dashboard(
+    port: int = typer.Option(8765, help="Port to bind the Mission Control web server."),
+    profile_name: str = typer.Option("default", "--profile", "-p", help="Active profile name."),
+) -> None:
+    """
+    Launch the local browser-based Mission Control dashboard.
+    """
+    from app.web_radar import run_web_dashboard
+    console.print(f"[bold cyan]Launching Mission Control at http://127.0.0.1:{port}...[/bold cyan]")
+    run_web_dashboard(port=port, profile_name=profile_name)
+
+
+@app.command(name="apply-posts")
+def apply_posts(
+    live: bool = typer.Option(False, "--live", help="Send actual emails via SMTP (default is dry-run preview)."),
+    pages: int = typer.Option(5, "--pages", min=1, max=20, help="Max search result pages to scan per query."),
+    headful: bool = typer.Option(False, "--headful", help="Run browser in headful mode (visible window)."),
+) -> None:
+    """
+    Scan LinkedIn recruiter hiring posts, generate tailored cover emails, and apply.
+    """
+    import subprocess
+    script_path = str(BASE_DIR / "linkedin_post_applier.py")
+    cmd = [sys.executable, script_path, "--pages", str(pages)]
+    if live:
+        cmd.append("--live")
+    if headful:
+        cmd.append("--headful")
+    console.print(f"[bold cyan]Launching LinkedIn Post Email Applier...[/bold cyan] (live={live}, pages={pages})")
+    subprocess.run(cmd, check=False)
+
+
+@app.command(name="sync-inbox")
+def sync_inbox(
+    max_messages: int = typer.Option(20, min=1, max=100, help="Max recent emails to inspect from IMAP."),
+) -> None:
+    """
+    Scan IMAP inbox for inbound recruiter responses, interview invites, and status updates.
+    """
+    from app.inbound_sync import InboundSyncManager
+    console.print(f"[bold cyan]Syncing IMAP inbox for recruiter triage (max={max_messages})...[/bold cyan]")
+    mgr = InboundSyncManager()
+    results = mgr.sync_imap_inbox(max_messages=max_messages)
+    if not results:
+        console.print("[yellow]No new recruiter interview invitations or assessments detected in inbox.[/yellow]")
+    else:
+        console.print(f"[bold green]✓ Succeeded:[/bold green] Triaged {len(results)} recruiter engagements. Alerts logged to exports/interview_alerts.md.")
+
+
+@app.command(name="compile-resume")
+def compile_resume(
+    role: str = typer.Option("Software Engineer", "--role", "-r", help="Target job role title."),
+    company: str = typer.Option("Target Company", "--company", "-c", help="Target company name."),
+    profile_name: str = typer.Option("default", "--profile", "-p", help="Persona profile name."),
+    jd: str = typer.Option("", help="Optional snippet of target job description."),
+) -> None:
+    """
+    Dynamically compile an ATS-compliant tailored PDF resume.
+    """
+    import re
+    from app.profile_loader import load_profile
+    from app.resume_compiler import DynamicResumeCompiler
+    profile = load_profile(profile_name)
+    compiler = DynamicResumeCompiler()
+    prefix = f"{profile_name}_{re.sub(r'[^a-zA-Z0-9]', '_', company)}_{re.sub(r'[^a-zA-Z0-9]', '_', role)}"
+    pdf_path = compiler.compile_tailored_pdf(
+        profile=profile,
+        job_title=role,
+        company=company,
+        job_description=jd,
+        filename_prefix=prefix,
+    )
+    console.print(f"[bold green]✓ ATS Tailored Resume compiled successfully:[/bold green] {pdf_path}")
+
+
+@app.command(name="export")
+def export(
+    output_path: Optional[Path] = typer.Option(
+        None,
+        "--output",
+        "-o",
+        help="Custom export destination CSV path.",
+    ),
+) -> None:
+    """
+    Export SQLite tracking records to a clean CSV file.
+    """
+    import csv
+    dest = output_path or (settings.logs_dir / "job_applications_export.csv")
+    with tracker._connect() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, source, company, title, url, status, score, timestamp FROM jobs ORDER BY id DESC")
+        rows = cursor.fetchall()
+    with open(dest, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["ID", "Source", "Company", "Title", "URL", "Status", "Score", "Timestamp"])
+        writer.writerows(rows)
+    console.print(f"[bold green]✓ Exported {len(rows)} records to:[/bold green] {dest}")
+
+
+@app.command(name="stop-ai")
+def stop_ai() -> None:
+    """
+    Unload Ollama models and terminate background AI processes to free 100% of RAM.
+    """
+    import subprocess
+    import urllib.request
+    console.print("[cyan]Unloading Ollama models and freeing system RAM...[/cyan]")
+    try:
+        req = urllib.request.Request(
+            f"{settings.ai_base_url}/api/generate",
+            data=f'{{"model": "{settings.ai_model}", "keep_alive": 0}}'.encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+        )
+        urllib.request.urlopen(req, timeout=3)
+    except Exception:
+        pass
+    if sys.platform.startswith("win"):
+        subprocess.run(["taskkill", "/F", "/IM", "ollama.exe"], capture_output=True)
+    else:
+        subprocess.run(["pkill", "-f", "ollama serve"], capture_output=True)
+    console.print("[bold green]✓ Local AI (Ollama) stopped and RAM released.[/bold green]")
+
+
 @app.command()
 def open_browser() -> None:
     """
