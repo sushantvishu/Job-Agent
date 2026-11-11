@@ -1,0 +1,42 @@
+# ============================================================
+# Job Agent Framework — Python Dependencies
+# ============================================================
+# Install with:
+#   pip install -r requirements.txt
+#
+# Primary Automation: Selenium with Chrome/Firefox auto-management
+# Optional Browser Binaries (if using Playwright suite):
+#   playwright install chromium
+#   playwright install firefox
+#
+# Python 3.10+ required.
+# ============================================================
+
+# ─── Portable Browser Automation ────────────────────────────
+selenium>=4.20.0
+webdriver-manager>=4.0.0
+playwright==1.59.0
+playwright-stealth==2.0.3
+
+# ─── HTTP & HTML Parsing ────────────────────────────────────
+requests==2.33.1
+beautifulsoup4==4.14.3
+lxml==6.1.0                        # fast HTML/XML parser backend for BS4
+
+# ─── Data Validation & Configuration ────────────────────────
+pydantic==2.13.3
+pydantic-settings>=2.0.0
+python-dotenv==1.2.2               # loads .env into os.environ automatically
+
+# ─── Templating Engine ──────────────────────────────────────
+jinja2>=3.1.2                      # email/cover-letter templates
+
+# ─── CLI & Rich Terminal Output ─────────────────────────────
+typer==0.25.1                      # Typer CLI framework
+rich==15.0.0                       # Rich terminal tables & progress bars
+
+# ─── Data Export & Analysis ─────────────────────────────────
+pandas==3.0.2                      # CSV/Excel export of tracked jobs
+
+# ─── Retry & Resilience ─────────────────────────────────────
+tenacity==8.3.0                    # retry decorator for flaky network calls

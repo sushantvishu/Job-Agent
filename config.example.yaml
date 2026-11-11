@@ -1,0 +1,61 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Job Agent Framework — Community Configuration Template
+# ─────────────────────────────────────────────────────────────────────────────
+# Copy this file to config.yaml and customize for your job search profile.
+# Sensitive passwords should be set via environment variables (.env).
+# ─────────────────────────────────────────────────────────────────────────────
+
+general:
+  browser_engine: "chrome"        # Options: chrome, chromium, msedge
+  browser_channel: "chrome"       # System Google Chrome
+  headless: false                 # false to observe automation in visible Chrome
+  default_timeout_ms: 30000       # Maximum wait for DOM elements
+  min_apply_score: 60             # Strict score floor before auto-submitting
+
+candidate:
+  name: "Candidate Name"
+  email: "candidate@example.com"
+  phone: "+919876543210"
+  headline: "Software Engineer | Python | Backend | Cloud"
+  experience_years: 1.0
+  notice_period: "Immediate"
+  location: "Bengaluru, India"
+  preferred_locations:
+    - "Bengaluru"
+    - "Hyderabad"
+    - "Pune"
+    - "Remote"
+  target_roles:
+    - "Python Developer"
+    - "Software Engineer"
+    - "Backend Engineer"
+
+address:
+  city: "Bengaluru"
+  state: "Karnataka"
+  postal_code: "560001"
+  country: "India"
+  country_code: "India (+91)"
+
+work_eligibility:
+  work_authorization: "Yes"
+  visa_sponsorship: "No"
+  willing_to_relocate: "Yes"
+  willing_to_work_shifts: "Yes"
+  gender: "Decline to self-identify"
+  marital_status: "Single"
+
+compensation:
+  current_salary: "0 LPA"
+  expected_salary: "Competitive"
+  currency: "INR"
+
+paths:
+  db_path: "jobs.db"
+  resume_path: "profile/resume.pdf"
+  exports_dir: "exports"
+  logs_dir: "logs"
+
+outreach:
+  daily_email_limit: 30           # Protect SMTP sender reputation
+  cooldown_seconds: 3.0           # Anti-detection delay between actions

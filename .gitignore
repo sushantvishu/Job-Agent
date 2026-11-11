@@ -1,0 +1,105 @@
+# ============================================================
+# Job Agent Framework — Git Exclusion Rules
+# ============================================================
+
+# ─── Secrets & Local Configuration ──────────────────────────
+.env
+*.env.local
+*.env.*.local
+!.env.example
+
+# ─── Live Database Files ─────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+# Keep the migrations folder but exclude any test databases
+tests/*.db
+
+# ─── Browser Profiles (session cookies / login state) ────────
+browser-profile/
+browser-profile-*/
+chrome-sync-profile/
+firefox-profile/
+
+# ─── Personal Profile & Resume Data ─────────────────────────
+# Keep the example files; block live personal data files
+profile/profile.json
+profile/email_accounts.json
+profile/*.pdf
+profile/*.docx
+profile/*.jpg
+profile/*.jpeg
+profile/*.png
+profile/*.gif
+!profile/profile.example.json
+!profile/email_accounts.example.json
+profiles/
+
+# ─── Scraped Job Data & URL Seeds ───────────────────────────
+jobs/*.txt
+jobs/*.csv
+!jobs/urls.example.txt
+
+# ─── Logs & Runtime Artifacts ───────────────────────────────
+logs/*
+!logs/.gitkeep
+*.log
+exports/
+backups/
+scratch/
+
+# ─── Python ─────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.venv/
+venv/
+.venv-wsl/
+env/
+ENV/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ─── Java / JVM ─────────────────────────────────────────────
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+target/
+.classpath
+.project
+.settings/
+
+# ─── IDE & Editor ───────────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+.vs/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ─── Temporary / OS ─────────────────────────────────────────
+*.tmp
+*.temp
+*.bak
+*.orig
+*.png
+*.html
+!templates/*.html
+!templates/*.md
+
+# ─── Test Artifacts ─────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/

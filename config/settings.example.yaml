@@ -1,0 +1,47 @@
+# ============================================================
+# Job Agent Framework — Settings Example
+# ============================================================
+# This file documents all configurable settings.
+# Most settings are controlled via environment variables in .env
+# This YAML is for reference and future config-file support.
+# ============================================================
+
+general:
+  # Browser engine: chrome | chromium | firefox | msedge
+  browser_engine: "chrome"
+  # Browser channel (used when browser_engine is chrome or chromium)
+  browser_channel: "chrome"
+  # Set true to run without a visible browser window (CI/servers)
+  headless: false
+  # Maximum milliseconds to wait for page elements
+  default_timeout_ms: 45000
+  # Minimum AI match score (0-100) required before auto-submitting
+  min_apply_score: 70
+
+ai:
+  # Backend: ollama (local) | openai (OpenAI-compatible API)
+  api_style: "ollama"
+  # For Ollama: http://127.0.0.1:11434
+  # For LM Studio: http://127.0.0.1:1234
+  # For OpenAI: https://api.openai.com/v1
+  base_url: "http://127.0.0.1:11434"
+  # Model name as known to your backend
+  model: "qwen2.5:7b-instruct"
+  # Comma-separated fallback models if primary is unavailable
+  fallback_models: "llama3.2:3b"
+
+logging:
+  # DEBUG | INFO | WARNING | ERROR
+  level: "INFO"
+  # Log file path (relative to project root)
+  file: "logs/job_agent.log"
+
+outreach:
+  # Maximum cold-outreach emails per day (protects sender reputation)
+  daily_email_limit: 30
+  # Seconds between automated browser actions (anti-detection delay)
+  cooldown_seconds: 3.0
+
+database:
+  # SQLite database file path (relative to project root)
+  path: "jobs.db"

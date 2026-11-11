@@ -1,0 +1,38 @@
+# ============================================================
+# Job Agent — Seed URL List
+# ============================================================
+# Add one URL per line. Supported URL types:
+#   - LinkedIn Jobs search URLs
+#   - LinkedIn Jobs listing page URLs  
+#   - Naukri job search URLs
+#   - Naukri job listing URLs
+#   - Direct company career portal job URLs
+#   - LinkedIn post URLs (for email-apply jobs)
+#
+# Lines starting with # are ignored.
+# Blank lines are ignored.
+#
+# Example — LinkedIn job search:
+# https://www.linkedin.com/jobs/search/?keywords=software+engineer&location=India&f_TPR=r86400
+#
+# Example — Naukri search:
+# https://www.naukri.com/software-engineer-jobs?experience=0&location=bengaluru
+#
+# Example — Direct job posting:
+# https://jobs.example.com/careers/software-engineer-12345
+#
+# Run the agent on this file:
+#   python app/main.py queue --input jobs/urls.example.txt
+#
+# Or generate search URLs from your profile automatically:
+#   python app/main.py generate-searches --keyword-count 20
+# ============================================================
+
+# --- LinkedIn Job Searches ---
+# https://www.linkedin.com/jobs/search/?keywords=python+developer&location=India&f_TPR=r86400&f_E=2
+
+# --- Naukri Job Searches ---
+# https://www.naukri.com/python-developer-jobs?experience=0&location=bengaluru
+
+# --- Direct Company Career Pages ---
+# https://careers.example-company.com/jobs?department=engineering

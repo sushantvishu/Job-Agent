@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{ name }} - Resume</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm 12mm 14mm;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1a1a1a;
+    background-color: #ffffff;
+    line-height: 1.35;
+    font-size: 9.5pt;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 1.5pt solid #2c3e50;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+  .name {
+    font-size: 19pt;
+    font-weight: 700;
+    color: #1a252f;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .headline {
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: #2980b9;
+    margin-top: 2px;
+    margin-bottom: 4px;
+  }
+  .contact-bar {
+    font-size: 8.5pt;
+    color: #4a5568;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .contact-bar span {
+    display: inline-block;
+  }
+  .section {
+    margin-bottom: 7px;
+  }
+  .section-title {
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 0.75pt solid #cbd5e0;
+    padding-bottom: 2px;
+    margin-bottom: 4px;
+  }
+  .summary-text {
+    font-size: 9pt;
+    color: #2d3748;
+    text-align: justify;
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    font-size: 9pt;
+  }
+  .skill-line {
+    margin-bottom: 2px;
+  }
+  .skill-label {
+    font-weight: 700;
+    color: #2c3e50;
+    display: inline-block;
+    min-width: 140px;
+  }
+  .skill-val {
+    color: #2d3748;
+  }
+  .entry {
+    margin-bottom: 5px;
+  }
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 9.5pt;
+  }
+  .entry-title {
+    font-weight: 700;
+    color: #1a252f;
+  }
+  .entry-company {
+    font-weight: 600;
+    color: #2980b9;
+  }
+  .entry-date {
+    font-size: 8.5pt;
+    color: #718096;
+    font-style: italic;
+  }
+  .entry-sub {
+    font-size: 8.5pt;
+    color: #4a5568;
+    margin-bottom: 2px;
+  }
+  ul.entry-bullets {
+    list-style-type: disc;
+    margin-left: 15px;
+    margin-top: 2px;
+  }
+  ul.entry-bullets li {
+    font-size: 8.8pt;
+    color: #2d3748;
+    margin-bottom: 2px;
+    line-height: 1.3;
+  }
+  .cert-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    font-size: 8.8pt;
+  }
+  .cert-item {
+    color: #2d3748;
+  }
+  .cert-item strong {
+    color: #2c3e50;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="name">{{ name }}</div>
+  <div class="headline">{{ headline }}</div>
+  <div class="contact-bar">
+    <span>📧 {{ email }}</span>
+    <span>•</span>
+    <span>📱 {{ phone }}</span>
+    <span>•</span>
+    <span>📍 {{ location }}</span>
+    <span>•</span>
+    <span>🔗 {{ github }}</span>
+    {% if portfolio %}<span>•</span><span>🌐 {{ portfolio }}</span>{% endif %}
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Professional Summary</div>
+  <div class="summary-text">{{ summary }}</div>
+</div>
+
+<div class="section">
+  <div class="section-title">Technical Skills</div>
+  <div class="skills-grid">
+    {% for group in skill_groups %}
+    <div class="skill-line">
+      <span class="skill-label">{{ group.category }}:</span>
+      <span class="skill-val">{{ group.skills }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Featured Engineering & Security Projects</div>
+  {% for proj in projects %}
+  <div class="entry">
+    <div class="entry-header">
+      <div>
+        <span class="entry-title">{{ proj.title }}</span>
+        {% if proj.tech %}<span class="entry-sub"> | <em>{{ proj.tech }}</em></span>{% endif %}
+      </div>
+      {% if proj.link %}<span class="entry-date">{{ proj.link }}</span>{% endif %}
+    </div>
+    <ul class="entry-bullets">
+      {% for bullet in proj.bullets %}
+      <li>{{ bullet }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="section">
+  <div class="section-title">Professional Experience</div>
+  {% for exp in experiences %}
+  <div class="entry">
+    <div class="entry-header">
+      <div>
+        <span class="entry-title">{{ exp.role }}</span> — <span class="entry-company">{{ exp.company }}</span>
+      </div>
+      <span class="entry-date">{{ exp.period }}</span>
+    </div>
+    <ul class="entry-bullets">
+      {% for bullet in exp.bullets %}
+      <li>{{ bullet }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="section">
+  <div class="section-title">Certifications & Credentials</div>
+  <div class="cert-list">
+    {% for cert in certifications %}
+    <div class="cert-item">• <strong>{{ cert.name }}</strong> ({{ cert.issuer }})</div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Education & Academic Achievements</div>
+  {% for edu in education %}
+  <div class="entry">
+    <div class="entry-header">
+      <div><span class="entry-title">{{ edu.degree }}</span> — <span class="entry-company">{{ edu.institution }}</span></div>
+      <span class="entry-date">{{ edu.grade }}</span>
+    </div>
+  </div>
+  {% endfor %}
+  <div style="font-size: 8.5pt; color: #4a5568; margin-top: 3px;">
+    <strong>Honors:</strong> 1st Rank in State — International Computer Olympiad (2008 & 2011) • 3x Client Appreciation Awards & Outstanding Performance Award.
+  </div>
+</div>
+
+</body>
+</html>
+

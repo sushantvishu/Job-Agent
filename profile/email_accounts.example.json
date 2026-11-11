@@ -1,0 +1,21 @@
+{
+  "_comment": "Copy this file to email_accounts.json and fill in your real addresses. Set app-passwords in .env.",
+  "accounts": [
+    {
+      "label": "primary",
+      "provider": "gmail",
+      "address": "your_primary@gmail.com",
+      "app_password_env": "JOB_AGENT_GMAIL_PRIMARY_APP_PASSWORD",
+      "imap_host": "imap.gmail.com",
+      "imap_port": 993
+    },
+    {
+      "label": "secondary",
+      "provider": "gmail",
+      "address": "your_secondary@gmail.com",
+      "app_password_env": "JOB_AGENT_GMAIL_SECONDARY_APP_PASSWORD",
+      "imap_host": "imap.gmail.com",
+      "imap_port": 993
+    }
+  ]
+}
